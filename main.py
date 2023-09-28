@@ -20,6 +20,8 @@ def show_image(base64code: str):
     st.image(binary, use_column_width=True)
 
 
+st.title('Lida Demo')
+st.text('First Step:')
 ai = None
 # input for openai-key
 openai_key = st.text_input('OpenAI Key', value='',
@@ -36,6 +38,7 @@ if ai is not None:
     ai.set_config(model_type)
 
 # upload excel or csv file
+st.text('Second Step:')
 uploaded_file = st.file_uploader("上传文件", type=["csv", "xls", "xlsx"])
 if uploaded_file is not None:
     match uploaded_file.name.split('.')[-1]:
@@ -57,13 +60,13 @@ if uploaded_file is not None:
     st.write(df)
 
 # ask a question and get a chart
+st.text('Third Step:')
 question = st.text_input('问题', value='')
 chart_type = st.selectbox('图表类型', ['柱状图', '折线图', '散点图', '饼图', '箱线图', '热力图'])
-if question:
-    charts = ai.ask_question(question, visualization=chart_type)
 
 button = st.button('生成报告', type='primary')
-if button:
+if question and button:
+    charts = ai.ask_question(question, visualization=chart_type)
     data = charts[0].raster
     show_image(data)
 

@@ -6,6 +6,9 @@ import chardet
 
 from llm import AI
 
+os.makedirs('./uploads', exist_ok=True)
+os.makedirs('./images', exist_ok=True)
+
 
 def show_image(base64code: str):
     """Show image from base64 code"""

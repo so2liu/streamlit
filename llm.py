@@ -53,4 +53,5 @@ class AI():
         summary = self.summary
         charts = lida.edit(
             summary=summary, instructions=instructions, code=code, library=library, textgen_config=self.default_config)
+        print(charts)
         return charts

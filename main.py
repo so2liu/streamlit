@@ -49,7 +49,8 @@ if uploaded_file is not None:
         case _:
             raise ValueError('文件格式错误')
 
-    ai.load_df(df)
+    if ai is not None:
+        ai.load_df(df)
     st.write(df)
 
 # ask a question and get a chart
@@ -64,9 +65,12 @@ if button:
     show_image(data)
 
 # edit report
-edit_advice = st.text_area('编辑建议', value='', placeholder='请在此处输入编辑建议，每行一条')
+edit_advice = st.text_area('修改建议', value='', placeholder='请在此处输入编辑建议，每行一条')
 if edit_advice:
     instructions = edit_advice.split('\n')
-    charts = ai.edit_chart(
-        instructions=instructions, code=charts[0].code, library='seaborn')
-    show_image(charts[0].raster)
+    try:
+        charts = ai.edit_chart(
+            instructions=instructions, code=charts[0].code, library='seaborn')
+        show_image(charts[0].raster)
+    except Exception as e:
+        st.write(e)
